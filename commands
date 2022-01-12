@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# Check if user is root on Arch distro. Install dialog.
+pacman --noconfirm --needed -Sy dialog || error "Are you sure you're running this as the root user, are on an Arch-based distribution and have an internet connection?"
+
+# Welcome user and pick dotfiles.
+welcomemsg || error "User exited."
+
+# Get and verify username and password.
+getuserandpass || error "User exited."
+
+# Give warning if user already exists.
+usercheck || error "User exited."
+
+# Last chance for user to back out before install.
+preinstallmsg || error "User exited."
+
+### The rest of the script requires no user input.
+
+# Refresh Arch keyrings.
+refreshkeys || error "Error automatically refreshing Arch keyring. Consider doing so manually."
+
+
+
+-----------------------------------------------------------
+pacman --noconfirm -S archlinux-keyring 
+pacman --noconfirm --needed -S curl ca-certificates base-devel git ntp zsh
+ntpdate 0.us.pool.ntp.org
+git clone --depth 1 "https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg --noconfirm -si
+#aurinstall
+yay -S --noconfirm  lf-git gtk-theme-arc-gruvbox-git   brave-bin sc-im  abook zsh-fast-syntax-highlighting-git task-spooler simple-mtpfs htop-vim-git mutt-wizard-git
+#gitmakeinstall
+git clone --depth 1 "$1" "$dir"
+
+https://github.com/LukeSmithxyz/dwmblocks.git
+https://github.com/lukesmithxyz/dmenu.git
+https://github.com/lukesmithxyz/st.git
+https://github.com/lukesmithxyz/dwm.git
