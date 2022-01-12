@@ -32,9 +32,99 @@ makepkg --noconfirm -si
 #aurinstall
 yay -S --noconfirm  lf-git gtk-theme-arc-gruvbox-git   brave-bin sc-im  abook zsh-fast-syntax-highlighting-git task-spooler simple-mtpfs htop-vim-git mutt-wizard-git
 #gitmakeinstall
-git clone --depth 1 "$1" "$dir"
-
+git clone --depth 1 "https://github.com/LukeSmithxyz/dwm.git" 
+cd "dwm" || exit 1
+	make 
+	make install 
+  
 https://github.com/LukeSmithxyz/dwmblocks.git
 https://github.com/lukesmithxyz/dmenu.git
 https://github.com/lukesmithxyz/st.git
 https://github.com/lukesmithxyz/dwm.git
+
+pacman --noconfirm --needed -S xorg-server
+xorg-xwininfo
+xorg-xinit
+ttf-linux-libertine 
+bc
+xcompmgr
+xorg-xprop
+arandr
+dosfstools
+libnotify
+dunst
+exfat-utils
+sxiv
+xwallpaper
+ffmpeg
+gnome-keyring
+neovim
+mpd
+mpc
+mpv
+man-db
+ncmpcpp
+newsboat
+noto-fonts-emoji
+ntfs-3g
+pipewire
+pipewire-pulse
+pulsemixer
+pamixer
+maim
+unclutter
+unrar
+unzip
+lynx
+xcape
+xclip
+xdotool
+xorg-xdpyinfo
+youtube-dl
+zathura
+zathura-pdf-mupdf
+poppler
+mediainfo
+atool
+fzf
+highlight
+xorg-xbacklight
+slock
+socat
+moreutils
+
+paru -S libxft-bgra-git
+
+
+
+# Most important command! Get rid of the beep!
+rmmod pcspkr
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf 
+
+# Make zsh the default shell for the user.
+chsh -s /bin/zsh "$name" >/dev/null 2>&1
+sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
+
+
+# Tap to click
+[ ! -f /etc/X11/xorg.conf.d/40-libinput.conf ] && printf 'Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+	# Enable left mouse button by tapping
+	Option "Tapping" "on"
+EndSection' > /etc/X11/xorg.conf.d/40-libinput.conf
+
+# Fix fluidsynth/pulseaudio issue.
+grep -q "OTHER_OPTS='-a pulseaudio -m alsa_seq -r 48000'" /etc/conf.d/fluidsynth ||
+	echo "OTHER_OPTS='-a pulseaudio -m alsa_seq -r 48000'" >> /etc/conf.d/fluidsynth
+
+# Start/restart PulseAudio.
+pkill -15 -x 'pulseaudio'; sudo -u "$name" pulseaudio --start
+
+# Last message! Install complete!
+
+clear
+
+ 
